@@ -17,7 +17,11 @@ def display_chat_history():
     for chat in memory.chat_memory.messages:
         role = "User" if chat.type == "human" else "Assistant"
         print(f"{role}: {chat.content}")
-
+def get_answer_streaming(question):
+        rag_instance = RAG(question)  # Initialize RAG pipeline
+        response_generator = rag_instance.get_answer(memory)  # Get response generator
+        for chunk in response_generator:
+            yield chunk  # Yield each chunk as it arrives
 # Chat loop
 while True:
     prompt = input("\nYou: ")
@@ -44,41 +48,16 @@ while True:
     """
 
     print("\nProcessing...")
-    start_time2 = time.time()
+   
 
     # Generate response
     try:
-        stream = client.chat.completions.create(
-            model="gpt-4o",
-            temperature=0,
-            messages=[
-                {"role": "system", "content": "You are a helpful assistant."},
-                *[
-                    {"role": "user" if m.type == "human" else "assistant", "content": m.content}
-                    for m in memory.chat_memory.messages
-                ],
-                {"role": "user", "content": prompt_with_context}
-            ],
-            stream=True,
-        )
+        for response_chunk in get_answer_streaming(prompt):
+            print(response_chunk, end="", flush=True) 
+        
 
-        # Collect response
-        response = ""  # Initialize response before the loop
-        for chunk in stream:
-            content = chunk.choices[0].delta.content  # Directly access the attribute
-            if content:  # Ensure content is not None
-                print(content, end="", flush=True)
-                response += content  # Append content to response
-
-
-        end_time2 = time.time()
-        elapsed_time2 = end_time2 - start_time2
-
-        print(f"\n\nElapsed time: {elapsed_time:.6f} seconds")
-        print(f"Elapsed time2: {elapsed_time2:.6f} seconds")
-        # Save conversation in memory
         memory.chat_memory.add_user_message(prompt)
-        memory.chat_memory.add_ai_message(response)
+        memory.chat_memory.add_ai_message(prompt)
 
     except Exception as e:
         print(f"An error occurred: {e}")

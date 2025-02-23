@@ -58,7 +58,10 @@ class RAG:
 
     def append_similar_questions_to_context(self):
         """Appends the most similar questions and their answers to the context."""
-        paths = [f"row data\Q-A_text\QA{i}.txt" for i in self.most_similar_questions]
+        #import os
+
+        paths = [os.path.join("row data", "Q-A_text", f"QA{i}.txt") for i in self.most_similar_questions]
+
 
         #with ThreadPoolExecutor() as executor:
             #results = executor.map(read_json, paths)
@@ -68,17 +71,21 @@ class RAG:
         """Loads additional JSON data based on classification output."""
         if 0 in self.classification_output or "0" in self.classification_output:
             return  # Exit if classification output is 0
-        paths = [f"row data\chapters_text\companies_rules{i}.txt" for i in self.classification_output]
+        
+
+        paths = [os.path.join("row data", "chapters_text", f"companies_rules{i}.txt") for i in self.classification_output]
+
+        #paths = [f"row data\chapters_text\companies_rules{i}.txt" for i in self.classification_output]
         #with ThreadPoolExecutor() as executor:
             #results = executor.map(read_json, paths)
         for path in paths:
             self.context += "\n"+ read_text_file(path)
         #self.context += "\n".join(map(str, results))
-    def get_answer(self):
+    def get_answer(self , memory):
         """Generates an answer based on the question and retrieved context."""
-        return question_answer(question=self.question, context=self.context)
+        return question_answer(question=self.question, context=self.context , memory=memory)
 
-def question_answer(question , context ):
+def question_answer(question , context , memory ):
     prompt_with_context = f"""Context: {context} this is  Ministry of Commerce's rules and information 
 
 Task: Answer the user's question based on the provided context, ensuring compliance with the rules and regulations of the Ministry of Commerce.  
@@ -134,14 +141,15 @@ your main task answer only user question form the context user questions are {qu
         response_stream = client.chat.completions.create(
             model="gpt-4o",  # Use GPT-4 model
             messages=[
-                {
-                    "role": "system",
-                    "content": mci_prompt
-                },
-                {"role": "user", "content": question}
+                {"role": "system", "content": mci_prompt},
+                *[
+                    {"role": "user" if m.type == "human" else "assistant", "content": m.content}
+                    for m in memory.chat_memory.messages
+                ],
+                {"role": "user", "content": prompt_with_context}
             ],
             max_tokens=max_response_tokens,
-            temperature=.5,
+            temperature=0,
             top_p=1,
             frequency_penalty=0,
             presence_penalty=0,
