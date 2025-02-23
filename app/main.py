@@ -40,7 +40,7 @@ app.add_middleware(
 app.include_router(
     voice_agent.router,
     prefix="/api/v1",
-    tags=["API xIntegration"],
+    tags=["API Integration"],
 )
 
 # Enhanced health check endpoint
