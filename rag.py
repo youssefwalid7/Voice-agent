@@ -15,8 +15,6 @@ memory = ConversationBufferMemory()
 # how memory work 
 #memory.chat_memory.add_user_message(question)
 #memory.chat_memory.add_ai_message(response)
-
-
 load_dotenv()
 os.environ['OPENAI_API_KEY'] = os.environ["OPENAI_API_KEY"]
 PINECONE_API_KEY = os.getenv("PINECONE_API_KEY2")
@@ -24,9 +22,8 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 from openai import OpenAI
 client = OpenAI(api_key=OPENAI_API_KEY) 
 class RAG:
-    def __init__(self, question ):
+    def __init__(self, question  ):
         self.question = question
-        #self.pc = PineconeManager(PINECONE_API_KEY, OPENAI_API_KEY)  # Initialize Pinecone
         self.context = "Here are the most relevant answers to the user's query:\n"
         # Run classification and similarity search in parallel
         results = self.run_parallel_tasks()
@@ -82,7 +79,9 @@ class RAG:
             self.context += "\n"+ read_text_file(path)
         #self.context += "\n".join(map(str, results))
     def get_answer(self , memory):
+
         """Generates an answer based on the question and retrieved context."""
+
         return question_answer(question=self.question, context=self.context , memory=memory)
 
 def question_answer(question , context , memory ):
@@ -130,9 +129,6 @@ instrucations :
 your main task answer only user question form the context user questions are {question}
 
 """
-
-    
-
     # Ensure the total tokens do not exceed the model's limit
     max_response_tokens = 8000
 
