@@ -92,11 +92,10 @@ class RAGService:
             return ""
             
         last_msg = chat_ctx.messages[-1]
-        print(last_msg)
         if last_msg.role != "user":
             return ""
             
-        return last_msg.content or ""
+        return last_msg or ""
 
     def process_query(self, chat_ctx: llm.ChatContext) -> None:
         """
@@ -109,10 +108,14 @@ class RAGService:
         
         if last_user_msg_content:
             context = self.build_context(last_user_msg_content)
-            chat_ctx.append(
-                role="system",
-                text=f"Here is relevant context for the query:\n\n{context}"
-            )
+            if context:
+                rag_msg = llm.ChatMessage.create(
+                    text="Context:\n" + context,
+                    role="assistant",
+                )
+            # replace last message with RAG, and append user message at the end
+            chat_ctx.messages[-1] = rag_msg
+            chat_ctx.messages.append(user_msg)
 
 # Create singleton instance
 rag_service = RAGService()
