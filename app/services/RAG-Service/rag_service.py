@@ -68,15 +68,17 @@ class RAGService:
         results = self.run_parallel_tasks(question)
         
         # Add similar Q&A pairs
-        qa_paths = [
-            os.path.join("raw-data", "Q-A_text", f"QA{i}.txt") 
-            for i in results["most_similar_questions"]
-        ]
-        for path in qa_paths:
-            context += "\n" + read_text_file(path)
+        if results["most_similar_questions"] not in ([0], ["0"]):
+
+            qa_paths = [
+                os.path.join("raw-data", "Q-A_text", f"QA{i}.txt") 
+                for i in results["most_similar_questions"]
+            ]
+            for path in qa_paths:
+                context += "\n" + read_text_file(path)
 
         # Add relevant chapter content
-        if results["chapters_classification"] not in (0, "0"):
+        if results["chapters_classification"] not in ([0], ["0"]):
             chapter_paths = [
                 os.path.join("raw-data", "chapters_text", f"companies_rules{i}.txt") 
                 for i in results["chapters_classification"]
