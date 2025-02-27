@@ -2,7 +2,7 @@ from typing import Any, Dict
 import logging
 import os
 from concurrent.futures import ThreadPoolExecutor
-from app.utils.rag_utils import (
+from rag_utils import (
     query_classification_agent_qa,
     query_classification_agent_chapters,
     read_text_file,
