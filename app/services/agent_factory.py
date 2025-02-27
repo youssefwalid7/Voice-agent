@@ -1,7 +1,7 @@
 from app.services.rag_service import rag_service
 from app.logging_config import configure_logging
 from app.services.mci_prompt import mci_prompt
-
+import openai
 
 logger = configure_logging()
 

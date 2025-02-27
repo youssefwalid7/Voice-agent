@@ -84,6 +84,8 @@ class RAG:
 
         return question_answer(question=self.question, context=self.context , memory=memory)
 
+
+
 def question_answer(question , context , memory ):
     prompt_with_context = f"""Context: {context} this is  Ministry of Commerce's rules and information 
 

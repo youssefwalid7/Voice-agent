@@ -1,5 +1,4 @@
 from pydantic_settings import BaseSettings
-
 class Settings(BaseSettings):
     openai_api_key: str
     aws_access_key_id: str
