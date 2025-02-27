@@ -30,9 +30,9 @@ class AgentFactory:
             stt=openai.STT(detect_language=True),
             
             # # RAG enhancement before LLM processing
-            # before_llm_cb=lambda _assistant, chat_ctx: (
-            #     rag_service.process_query(chat_ctx)
-            # ),
+            before_llm_cb=lambda _assistant, chat_ctx: (
+                rag_service.process_query(chat_ctx)
+            ),
             
             # Language Model
             llm=google.LLM(model="gemini-2.0-flash-exp", temperature="0.8"),
