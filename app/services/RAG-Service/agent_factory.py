@@ -4,11 +4,31 @@ from app.services.mci_prompt import mci_prompt
 import openai
 
 logger = configure_logging()
+
+
+
 class AgentFactory:
     """
     Factory class for creating and configuring voice-enabled AI agents.
     Integrates speech-to-text, RAG-enhanced LLM, and text-to-speech capabilities.
     """
+    
+    @staticmethod
+    async def _before_tts_cb(agent: VoicePipelineAgent, text: str | AsyncIterable[str]):
+        async def process_stream():
+            async for chunk in text:
+                processed = chunk.replace("<think>", "")\
+                    .replace("</think>", "Okay, I'm ready to respond.")
+                yield processed
+
+        if isinstance(text, str):
+            print("non streaming"+ text)
+            # Handle non-streaming text
+            return text.replace("<think>", "").replace("</think>", "")
+        else:
+            print("streaming")
+            # Handle streaming text
+            return process_stream()
     
     @staticmethod
     def create_agent(ctx: JobContext):
@@ -35,6 +55,9 @@ class AgentFactory:
             
             # Language Model
             llm=google.LLM(model="gemini-2.0-flash-exp", temperature="0.8"),
+            
+            # LLM response synthesis before TTS
+            before_tts_cb=AgentFactory._before_tts_cb,
             
             # Text-to-Speech
             tts=openai.TTS(voice='shimmer',speed=1.0),
