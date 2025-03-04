@@ -4,7 +4,6 @@ from app.services.mci_prompt import mci_prompt
 import openai
 
 logger = configure_logging()
-
 class AgentFactory:
     """
     Factory class for creating and configuring voice-enabled AI agents.
