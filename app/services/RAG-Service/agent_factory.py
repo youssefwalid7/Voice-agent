@@ -1,8 +1,9 @@
 from app.services.rag_service import rag_service
 from app.logging_config import configure_logging
 from app.services.mci_prompt import mci_prompt
-import openai
+from  .rag_utils import replace_numbers_with_words
 
+import openai
 logger = configure_logging()
 class AgentFactory:
     """

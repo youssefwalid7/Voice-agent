@@ -45,6 +45,7 @@ while True:
     - Answer from Context: Your response must be directly derived from the provided context. Do not add information outside the context.
     - No Answer in Context: If the context does not contain sufficient information, respond with: "I don't have the answer please detect the company type "
     - Be Clear and Concise: Ensure your response is clear, concise, and directly addresses the question.
+    
     """
 
     print("\nProcessing...")

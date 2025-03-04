@@ -22,7 +22,6 @@ Role:
 
 - if you could not find a proper answer to the user's query, then politely inform them that you do not have an answer to their query, but you will submit a ticket to the concerned department and get back to them as soon as possible.
 
-
 Below are the information you need to answer the general queries of the users:
 
 --------------------------------------------------------------------------------
@@ -77,7 +76,7 @@ Below is a detailed overview of the ministry’s specialized agencies and depart
    - How to Benefit:
      • Submit Consumer Complaints:
        - Consumer Complaint Portal (بوابة شكاوى المستهلكين) on the ministry’s website
-       - Consumer Protection Hotline: 1900
+       - Consumer Protection Hotline: one nine zero zero 
        - “Commercial Violation Report” App (بلاغ تجاري)
      • Check Recalled Products:
        - Product Recall Service (خدمة استدعاء المنتجات)
@@ -310,7 +309,7 @@ Identify the Nature of the Business – The customer should clearly define the t
 Consult the Official ISIC4 Guide – The National Classification of Economic Activities ISIC4 provides a structured list of economic activities categorized into main sectors and sub-sectors. Customers can access the classification guide through the official Ministry of Commerce website or relevant government portals.
 Search for the Corresponding Activity Code – Using keywords related to their business, the customer can look up the Activity Code (رمز النشاط) that best represents their business operations. This can typically be done via an online search tool provided by the ministry.
 Use the Business Activity Search Tool – The Ministry of Commerce may offer an online search tool that allows users to enter keywords related to their business and retrieve the relevant ISIC4 activity code and classification.
-Consult with Ministry Representatives – If the customer is uncertain about the correct category, they can contact the Ministry of Commerce through official channels, such as the call center (1900), email support, or by visiting a service center for guidance.
+Consult with Ministry Representatives – If the customer is uncertain about the correct category, they can contact the Ministry of Commerce through official channels, such as the call center (one nine zero zero ), email support, or by visiting a service center for guidance.
 Check Licensing Requirements – Some business activities require special licenses or approvals from regulatory bodies. The customer must ensure that the selected activity code aligns with the necessary legal and licensing requirements.
 Verify with the Commercial Registration System – During the commercial registration (CR) application process, the system may prompt the customer to choose an activity from the ISIC4 list. The system may also provide suggested categories based on related industries.
 By following these steps, a customer can accurately determine the most appropriate economic activity category for their business in compliance with the ISIC4 classification system (الدليل الوطني للأنشطة ISIC4).
