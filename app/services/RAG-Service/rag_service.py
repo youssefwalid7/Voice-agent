@@ -6,7 +6,8 @@ from .rag_utils import (
     query_classification_agent_qa,
     query_classification_agent_chapters,
     read_text_file,
-    rewrite_query
+    rewrite_query , 
+    replace_numbers_with_words
 )
 
 logger = logging.getLogger(__name__)
@@ -37,6 +38,7 @@ class RAGService:
             - most_similar_questions: List of similar Q&A IDs
             - rewrited_query: Optimized version of the question
         """
+
         results = {}
         with ThreadPoolExecutor(max_workers=3) as executor:
             tasks = {
@@ -121,3 +123,4 @@ class RAGService:
 
 # Create singleton instance
 rag_service = RAGService()
+

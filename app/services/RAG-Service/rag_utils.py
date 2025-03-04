@@ -2,7 +2,18 @@ from pydantic import BaseModel, Field
 from langchain_openai import ChatOpenAI
 from langchain.prompts import ChatPromptTemplate, PromptTemplate
 from langchain.output_parsers import PydanticOutputParser
+import re
+from num2words import num2words
+def detect_language(text):
+    """Detect if text is primarily Arabic or English based on character presence."""
+    arabic_chars = re.search(r'[\u0600-\u06FF]', text)  # Arabic Unicode Range
+    return 'ar' if arabic_chars else 'en'
 
+def replace_numbers_with_words(text):
+    """Replace numbers in text with words based on detected language (Arabic or English)."""
+    lang = detect_language(text)  # Detect language
+    return re.sub(r'\d+', lambda x: num2words(int(x.group()), lang=lang), text)
+# Output: I have three apples and two thousand, eight hundred and thirty oranges.
 def query_classification_agent_chapters(user_query: str) -> list:
     # Define the Pydantic model
     class Query(BaseModel):
@@ -462,3 +473,10 @@ def read_text_file(file_path):
         return "Error: File not found."
     except Exception as e:
         return f"Error: {e}"
+    
+instrucations = f"""
+3.Output Format:
+    -The response should be in an unordered list format (e.g., using bullet points).
+    -Do not include numerical digits (1, 2, 3). Instead, write out numbers in words (one, two, three). if the english and واحد اثنين ثلاثه if arabic  no need to math number do not include it in your response 
+
+"""
